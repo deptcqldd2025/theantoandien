@@ -3,52 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VDC Safety Card App</title>
+    <title>Thẻ An Toàn Điện - VDC</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#004a99">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; background: #eee; }
-        .app-container { display: flex; flex-direction: column; height: 100%; }
-        
-        /* Nhúng link gốc */
-        iframe { flex: 1; width: 100%; border: none; }
-
-        /* Vùng QR động 45s chuẩn EVN */
-        .qr-overlay { 
-            background: white; padding: 15px; text-align: center; 
-            border-top: 2px solid #004a99; box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
-        }
-        #qrcode { display: inline-block; margin-bottom: 5px; }
-        .qr-label { font-size: 11px; color: #e31b23; font-weight: bold; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: #fff; }
+        iframe { border: none; width: 100%; height: 100%; display: block; }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <iframe src="https://ldcttphcm.io.vn/theantoan/"></iframe>
-
-        <div class="qr-overlay">
-            <div id="qrcode"></div>
-            <div class="qr-label">Mã động (Tự đổi mỗi 45s)</div>
-        </div>
-    </div>
+    <iframe src="https://ldcttphcm.io.vn/theantoan/"></iframe>
 
     <script>
-        // Đăng ký PWA
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
         }
-
-        // Logic sinh mã QR động 45s
-        let qr = new QRCode(document.getElementById("qrcode"), { width: 120, height: 120 });
-        function updateQR() {
-            const timeStep = 45;
-            const now = Math.floor(Date.now() / 1000);
-            const token = "VDC_VERIFY_" + Math.floor(now / timeStep);
-            qr.makeCode(token);
-            setTimeout(updateQR, 1000);
-        }
-        updateQR();
     </script>
 </body>
 </html>
