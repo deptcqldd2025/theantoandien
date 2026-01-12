@@ -2,117 +2,112 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="description" content="Ứng dụng Thẻ An Toàn - Chuyển hướng nhanh">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#3498db">
+    <meta name="description" content="Ứng dụng Thẻ An Toàn">
     
     <link rel="manifest" href="manifest.json">
-    
     <link rel="apple-touch-icon" href="icon-192.png">
 
-    <title>Đang chuyển hướng...</title>
+    <title>Thẻ An Toàn</title>
     
     <style>
-        body {
+        /* Reset CSS để iframe tràn màn hình */
+        html, body {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f5f7fa;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .container {
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin: 20px;
-            max-width: 90%;
-            width: 300px;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        h2 {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        p {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            display: block;
             width: 100%;
-            padding: 12px 0;
-            margin-top: 10px;
-            text-decoration: none;
-            border-radius: 6px;
+            height: 100%;
+            overflow: hidden; /* Ẩn thanh cuộn của trang mẹ */
+            background-color: #f5f7fa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Iframe chiếm trọn màn hình */
+        #content-frame {
+            width: 100%;
+            height: 100%; /* Fallback */
+            height: 100vh;
+            height: -webkit-fill-available; /* Fix cho iOS Safari */
+            border: none;
+            display: block;
+        }
+
+        /* Thanh cài đặt PWA (Floating Bar) */
+        #pwa-install-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #eee;
+            padding: 12px 20px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: none; /* Ẩn mặc định */
+            justify-content: space-between;
+            align-items: center;
+            z-index: 9999;
+            box-sizing: border-box;
+            /* Safe area cho iPhone đời mới */
+            padding-bottom: env(safe-area-inset-bottom, 12px);
+        }
+
+        .pwa-text {
             font-size: 14px;
             font-weight: 500;
-            border: none;
-            cursor: pointer;
-            box-sizing: border-box;
-        }
-
-        .btn-manual {
-            background-color: #f0f0f0;
             color: #333;
         }
 
-        .btn-install {
+        .pwa-btn {
             background-color: #3498db;
             color: white;
-            display: none; /* Ẩn mặc định, chỉ hiện khi browser cho phép cài */
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .pwa-close {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #999;
+            margin-left: 10px;
+            cursor: pointer;
         }
 
         .version {
-            position: fixed;
-            bottom: 10px;
-            font-size: 10px;
-            color: #ccc;
+            display: none; /* Ẩn version khỏi giao diện người dùng để sạch đẹp */
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="spinner"></div>
-        <h2>Đang xử lý...</h2>
-        <p>Đang kết nối đến Thẻ An Toàn.</p>
-        
-        <button id="installBtn" class="btn btn-install">📲 Cài đặt ứng dụng này</button>
-        
-        <a href="https://ldcttphcm.io.vn/theantoan" class="btn btn-manual">Truy cập ngay</a>
+    <iframe 
+        id="content-frame"
+        src="https://ldcttphcm.io.vn/theantoan" 
+        title="Nội dung Thẻ An Toàn"
+        allow="geolocation; microphone; camera; fullscreen; clipboard-read; clipboard-write"
+    ></iframe>
+
+    <div id="pwa-install-bar">
+        <div style="display: flex; align-items: center;">
+            <span class="pwa-text">Cài đặt ứng dụng để truy cập nhanh hơn</span>
+        </div>
+        <div style="display: flex; align-items: center;">
+            <button id="installBtn" class="pwa-btn">Cài đặt</button>
+            <button id="closeInstallBtn" class="pwa-close">&times;</button>
+        </div>
     </div>
 
-    <div class="version">v1.1</div>
+    <div class="version">v1.2</div>
 
     <script>
         // Version Control
-        const APP_VERSION = "1.1";
+        const APP_VERSION = "1.2";
         console.log("App Version:", APP_VERSION);
 
         // Firebase Config
@@ -126,4 +121,47 @@
         };
 
         // --- PWA LOGIC ---
-        // 1.
+        // 1. Đăng ký Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW Registered'))
+                    .catch(err => console.log('SW Error', err));
+            });
+        }
+
+        // 2. Xử lý sự kiện cài đặt (Install Prompt)
+        let deferredPrompt;
+        const installBar = document.getElementById('pwa-install-bar');
+        const installBtn = document.getElementById('installBtn');
+        const closeInstallBtn = document.getElementById('closeInstallBtn');
+
+        // Kiểm tra xem đang chạy trên trình duyệt hay trong app đã cài (standalone)
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Chỉ hiện thanh cài đặt nếu chưa cài app (không phải mode standalone)
+            if (!isStandalone) {
+                installBar.style.display = 'flex';
+            }
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                installBar.style.display = 'none';
+            }
+        });
+
+        closeInstallBtn.addEventListener('click', () => {
+            installBar.style.display = 'none';
+        });
+
+    </script>
+</body>
+</html>
