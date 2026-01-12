@@ -3,23 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Thẻ An Toàn Điện - VDC</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#004a99">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Chuyển hướng đến Thẻ An Toàn">
+    
+    <meta http-equiv="refresh" content="0;url=https://ldcttphcm.io.vn/theantoan">
+    
+    <title>Đang chuyển hướng...</title>
+    
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: #fff; }
-        iframe { border: none; width: 100%; height: 100%; display: block; }
+        /* CSS tối ưu cho giao diện Mobile */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f7fa;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 20px;
+            max-width: 90%;
+            width: 300px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .btn-manual {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .version {
+            position: fixed;
+            bottom: 10px;
+            font-size: 10px;
+            color: #ccc;
+        }
     </style>
 </head>
 <body>
-    <iframe src="https://ldcttphcm.io.vn/theantoan/"></iframe>
+
+    <div class="container">
+        <div class="spinner"></div>
+        <h2>Đang chuyển hướng...</h2>
+        <p>Hệ thống đang đưa bạn đến trang Thẻ An Toàn.</p>
+        
+        <a href="https://ldcttphcm.io.vn/theantoan" class="btn-manual">Nhấn vào đây nếu chờ lâu</a>
+    </div>
+
+    <div class="version">v1.0</div>
 
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
-        }
+        // Version Control Info
+        const APP_VERSION = "1.0";
+        console.log("App Version:", APP_VERSION);
+
+        // Firebase Config (Lưu trữ để sử dụng nếu cần mở rộng tính năng sau này)
+        const firebaseConfig = { 
+            apiKey: "AIzaSyCzWjfcD5Dgq7V-i2izb9tKLR6QM6qWPQo", 
+            authDomain: "tavietnam-78ae8.firebaseapp.com", 
+            projectId: "tavietnam-78ae8", 
+            storageBucket: "tavietnam-78ae8.firebasestorage.app", 
+            messagingSenderId: "670121705534", 
+            appId: "1:670121705534:web:1027ad98550573ad37116f" 
+        };
+
+        // Thực hiện chuyển hướng ngay khi JS tải xong
+        // Sử dụng replace() để không lưu trang chuyển hướng vào lịch sử duyệt web
+        window.location.replace("https://ldcttphcm.io.vn/theantoan");
+        
+        // Fallback sau 3 giây nếu chưa chuyển
+        setTimeout(function() {
+            window.location.href = "https://ldcttphcm.io.vn/theantoan";
+        }, 3000);
     </script>
 </body>
 </html>
